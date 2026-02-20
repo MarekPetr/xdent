@@ -1,17 +1,23 @@
 <template>
     <div 
         class="todo-results" 
-        :class="{'red-text': !this.count, 'green-text': this.count}">
-        {{ count }}
+        :class="{'red-text': !this.todosDone, 'green-text': this.todosDone}">
+        {{ todosDone }}
     </div>
 </template>
 <script>
 import { defineComponent } from "vue";
+import { useTodoItems } from "../composables/use-todo-items";
 
 export default defineComponent({
     name: "TodoResults",
 
-    props: ["count"],
+    setup() {
+        const { todosDone } = useTodoItems()
+        return {
+            todosDone,
+        }
+    }
 });
 </script>
 <style>

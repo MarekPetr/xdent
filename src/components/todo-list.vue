@@ -19,38 +19,31 @@
 <script>
 import { defineComponent } from "vue";
 import TodoCheckbox from "./todo-checkbox.vue";
+import { useTodoItems } from "../composables/use-todo-items";
 
 export default defineComponent({
     name: "TodoList",
 
     components: { TodoCheckbox },
 
-    props: ["todos"],
+    setup() {
+        const { todos, handleTodosChanged } = useTodoItems();
 
-    emits: ["todos-changed"],
-
-    setup(props, { emit }) {
         const toggleCheck = (id) => {
-            emit(
-                "todos-changed",
-                props.todos.map((el) => {
-                    if (el.id === id) {
-                        return {
-                            ...el,
-                            checked: !el.checked,
-                        };
-                    }
+            handleTodosChanged(todos.value.map((el) => {
+                if (el.id === id) {
+                    return {
+                        ...el,
+                        checked: !el.checked,
+                    };
+                }
 
-                    return el;
-                })
-            );
+                return el;
+            }))
         };
 
         const handleDelete = (id) => {
-            emit(
-                "todos-changed",
-                props.todos.filter((el) => el.id !== id)
-            )
+            handleTodosChanged(todos.value.filter((el) => el.id !== id))
         };
 
         const handleKeyUp = (e, id) => {
@@ -62,7 +55,8 @@ export default defineComponent({
         return {
             toggleCheck,
             handleDelete,
-            handleKeyUp
+            handleKeyUp,
+            todos
         };
     },
 });

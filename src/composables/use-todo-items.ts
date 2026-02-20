@@ -1,8 +1,7 @@
 import { computed, onMounted, ref } from 'vue'
+const todos = ref([]);
 
-export function useTodoItems() {
-    const todos = ref([]);
-    
+export function useTodoItems() {   
     const todosDone = computed(() => {
         return todos.value.filter(todo => todo.checked).length;
     })
@@ -21,8 +20,6 @@ export function useTodoItems() {
             console.error(e)
         }
     })
-    
-
 
     const handleTodosChanged = (newTodos) => {
         todos.value = newTodos;

@@ -1,8 +1,8 @@
 <template>
     <div class="root">
-        <TodoList :todos="todos" @todos-changed="handleTodosChanged" />
-        <TodoResults :count="todosDone"/>
-        <TodoForm :todos="todos" @todos-changed="handleTodosChanged" />
+        <TodoList />
+        <TodoResults />
+        <TodoForm />
     </div>
 </template>
 
@@ -11,7 +11,6 @@ import TodoForm from "./components/todo-form.vue";
 import { defineComponent } from "vue";
 import TodoList from "./components/todo-list.vue";
 import TodoResults from "./components/todo-results.vue";
-import { useTodoItems } from "./composables/use-todo-items";
 
 export default defineComponent({
     name: "App",
@@ -20,10 +19,6 @@ export default defineComponent({
         TodoList,
         TodoForm,
         TodoResults,
-    },
-
-    setup() {
-        return useTodoItems();
     },
 });
 </script>
