@@ -8,10 +8,10 @@
 
 <script>
 import TodoForm from "./components/todo-form.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import TodoList from "./components/todo-list.vue";
-import { todosList } from "./todo-data";
 import TodoResults from "./components/todo-results.vue";
+import { useTodoItems } from "./composables/use-todo-items";
 
 export default defineComponent({
     name: "App",
@@ -23,19 +23,7 @@ export default defineComponent({
     },
 
     setup() {
-        const todos = ref(todosList);
-        const todosDone = ref(0);
-
-        const handleTodosChanged = (newTodos) => {
-            todosDone.value = newTodos.filter(todo => todo.checked).length;
-            todos.value = newTodos;
-        };
-
-        return {
-            todos,
-            todosDone,
-            handleTodosChanged,
-        };
+        return useTodoItems();
     },
 });
 </script>
