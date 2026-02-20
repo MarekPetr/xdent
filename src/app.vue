@@ -1,6 +1,7 @@
 <template>
     <div class="root">
         <TodoList :todos="todos" @todos-changed="handleTodosChanged" />
+        <TodoResults :count="todosDone"/>
         <TodoForm :todos="todos" @todos-changed="handleTodosChanged" />
     </div>
 </template>
@@ -10,6 +11,7 @@ import TodoForm from "./components/todo-form.vue";
 import { defineComponent, ref } from "vue";
 import TodoList from "./components/todo-list.vue";
 import { todosList } from "./todo-data";
+import TodoResults from "./components/todo-results.vue";
 
 export default defineComponent({
     name: "App",
@@ -17,17 +19,21 @@ export default defineComponent({
     components: {
         TodoList,
         TodoForm,
+        TodoResults,
     },
 
     setup() {
         const todos = ref(todosList);
+        const todosDone = ref(0);
 
         const handleTodosChanged = (newTodos) => {
+            todosDone.value = newTodos.filter(todo => todo.checked).length;
             todos.value = newTodos;
         };
 
         return {
             todos,
+            todosDone,
             handleTodosChanged,
         };
     },
