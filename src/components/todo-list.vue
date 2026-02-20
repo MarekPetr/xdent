@@ -47,7 +47,12 @@ export default defineComponent({
             );
         };
 
-        const handleDelete = (id) => {};
+        const handleDelete = (id) => {
+            emit(
+                "todos-changed",
+                props.todos.filter((el) => el.id !== id)
+            )
+        };
 
         const handleKeyUp = (e, id) => {
             if (e.keyCode === 13) {
