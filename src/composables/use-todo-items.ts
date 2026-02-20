@@ -2,7 +2,11 @@ import { computed, onMounted, ref } from 'vue'
 
 export function useTodoItems() {
     const todos = ref([]);
-
+    
+    const todosDone = computed(() => {
+        return todos.value.filter(todo => todo.checked).length;
+    })
+    
     onMounted(async() => {
         try {
             const result = await fetch('/api/todos')
@@ -17,14 +21,12 @@ export function useTodoItems() {
             console.error(e)
         }
     })
+    
 
-    const handleTodosChanged = (newTodos) => {        
+
+    const handleTodosChanged = (newTodos) => {
         todos.value = newTodos;
     };
-
-    const todosDone = computed(() => {
-        return todos.value.filter(todo => todo.checked).length;
-    })
 
     return {
         todos,
